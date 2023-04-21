@@ -44,7 +44,7 @@ export default function BoardColumn({ col, onAddTask }: Props) {
   console.log(selectedTask);
 
   return (
-    <div className="w-60">
+    <div className="w-60 shrink-0">
       <header className="flex items-center gap-2 mb-4">
         <div
           className="h-4 w-4 rounded-full"
