@@ -16,6 +16,7 @@ type Props = {};
 export default function Board({}: Props) {
   const [showEditForm, setShowEditForm] = useState(false);
   const [showAddTaskForm, setShowAddTaskForm] = useState(false);
+  const [selectedColumn, setSelectedColumn] = useState<string>()
 
   const { selectedBoard, selectBoard, getBoardById } =
     useContext(BoardsContext);
@@ -56,7 +57,7 @@ export default function Board({}: Props) {
           <BoardColumn
             key={c.id}
             col={c}
-            onAddTask={() => setShowAddTaskForm(true)}
+            onAddTask={() => {setShowAddTaskForm(true); setSelectedColumn(c.id)}}
           />
         ))}
         <div className="bg-zinc-700/10 w-60 rounded-md">
@@ -92,6 +93,7 @@ export default function Board({}: Props) {
             callback={() => setShowAddTaskForm(false)}
             type="create"
             board={selectedBoard!}
+            columnId={selectedColumn}
           />
         </Modal>
       )}

@@ -70,6 +70,8 @@ export function BoardsContextProvider({ children }: Props) {
     return boards.find((b) => b.id == id);
   }
 
+  function toggleSubtaskDone(id: string) {}
+
   useEffect(() => {
     const localBoards = localStorage.getItem("boards");
     if (localBoards) {

@@ -5,6 +5,7 @@ import {
   useContext,
   FormEventHandler,
   ChangeEventHandler,
+  useEffect,
 } from "react";
 import { Input } from "../Form/Input/Input";
 import Button from "../Form/Button";
@@ -25,6 +26,7 @@ type Props = {
   type: "edit" | "create";
   initialForm?: Form;
   board: IBoard;
+  columnId: undefined | string;
 };
 
 type Form = {
@@ -47,13 +49,18 @@ export function TaskForm({
   initialForm = INITIAL_FORM,
   type,
   board,
+  columnId,
 }: Props) {
   const [form, setForm] = useState<Form>(initialForm);
 
   const { addBoard, updateBoard, selectedBoard } = useContext(BoardsContext);
 
+  console.log({ columnId });
+
   function handleChange(target: any) {
     //const { target } = event;
+
+    console.log(board);
 
     if (target.name === "subTask") {
       console.log(target.value);
@@ -122,6 +129,12 @@ export function TaskForm({
 
   console.log(form);
 
+  useEffect(() => {
+    if (columnId) {
+      setForm((f) => ({ ...f, columnId }));
+    }
+  }, []);
+
   return (
     <form className="flex flex-col gap-4" onSubmit={onSubmit}>
       <Input
@@ -144,11 +157,11 @@ export function TaskForm({
         Column
         <select
           className="dark:bg-gray-700  w-full  h-10 p-2 rounded-[.25rem] outline outline-[2px] outline-offset-0 outline-gray-500 focus:outline-[3px]  focus:outline-blue-500 transition-colors"
-          defaultValue={form.columnId}
+          defaultValue={columnId ?? form.columnId}
           id="columnId"
           onChange={({ target }) => handleChange(target)}
         >
-          <option value="" selected disabled>
+          <option value="" disabled>
             Select
           </option>
           {board.columns.map((c) => (
