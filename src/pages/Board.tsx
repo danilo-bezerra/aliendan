@@ -16,7 +16,7 @@ type Props = {};
 export default function Board({}: Props) {
   const [showEditForm, setShowEditForm] = useState(false);
   const [showAddTaskForm, setShowAddTaskForm] = useState(false);
-  const [selectedColumn, setSelectedColumn] = useState<string>()
+  const [selectedColumn, setSelectedColumn] = useState<string>();
 
   const { selectedBoard, selectBoard, getBoardById } =
     useContext(BoardsContext);
@@ -37,7 +37,10 @@ export default function Board({}: Props) {
   console.log(selectedBoard);
 
   return (
-    <div className="grid grid-cols-1">
+    <div
+      className="grid grid-cols-1   "
+      style={{ width: "calc(100vw - 300px)" }}
+    >
       <header className="flex  justify-between items-center  bg-gray-800 p-4 border border-zinc-600 max-h-[80px]">
         <h2 className="font-semibold text-2xl">{selectedBoard?.title}</h2>
         <div className="flex items-center gap-2">
@@ -57,7 +60,10 @@ export default function Board({}: Props) {
           <BoardColumn
             key={c.id}
             col={c}
-            onAddTask={() => {setShowAddTaskForm(true); setSelectedColumn(c.id)}}
+            onAddTask={() => {
+              setShowAddTaskForm(true);
+              setSelectedColumn(c.id);
+            }}
           />
         ))}
         <div className="bg-zinc-700/10 w-60 rounded-md">
